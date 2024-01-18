@@ -1,24 +1,15 @@
-import React from 'react';
+import React from "react";
 
-type Props = {
-  pdf_url: string;
-};
+type Props = { pdf_url: string };
 
 const PDFViewer = ({ pdf_url }: Props) => {
+
+  const p = `https://chatpdf-gaurav18122001.s3.ap-southeast-1.amazonaws.com/${pdf_url}`
   return (
-    <div className="w-full h-full">    
-      <object
-        data={`https://docs.google.com/viewer?url=${pdf_url}&embedded=true`}
-        type="application/pdf"
-        width="100%"
-        height="100%"
-      >
-        <p>
-          Your browser does not support PDF viewing. You can download the PDF{' '}
-          <a href={pdf_url}>here</a>.
-        </p>
-      </object>
-    </div>
+    <iframe
+      src={`https://docs.google.com/gview?url=${p}&embedded=true`}
+      className="w-full h-full"
+    ></iframe>
   );
 };
 

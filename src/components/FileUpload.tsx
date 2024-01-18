@@ -25,6 +25,7 @@ const FileUpload = () => {
         });
         return response.data; 
       } catch (error) {
+        
        console.log("error in getting response") 
       }
       

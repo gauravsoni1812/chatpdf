@@ -1,5 +1,4 @@
 // /api/stripe
-
 import { db } from "@/lib/db";
 import { userSubscriptions } from "@/lib/db/schema";
 import { stripe } from "@/lib/stripe";
@@ -18,10 +17,8 @@ export async function GET() {
       return new NextResponse("unauthorized", { status: 401 });
     }
 
-    const _userSubscriptions = await db
-      .select()
-      .from(userSubscriptions)
-      .where(eq(userSubscriptions.userId, userId));
+    const _userSubscriptions = await db.select().from(userSubscriptions).where(eq(userSubscriptions.userId, userId));
+    // console.log(_userSubscriptions);
     if (_userSubscriptions[0] && _userSubscriptions[0].stripeCustomerId) {
       // trying to cancel at the billing portal
       const stripeSession = await stripe.billingPortal.sessions.create({

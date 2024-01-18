@@ -29,7 +29,8 @@ const ChatPage = async ({ params: { chatId } }: Props) => {
   const currentChat = _chats.find((chat) => chat.id === parseInt(chatId));
   
   const isPro = await checkSubscription();
-
+  const stringWithPlus = currentChat?.pdfName.replace(/ /g, '+');
+ 
 
   return (
     <div className="flex max-h-screen">
@@ -40,7 +41,7 @@ const ChatPage = async ({ params: { chatId } }: Props) => {
         </div>
         {/* pdf viewer */}
         <div className="max-h-screen p-4 flex-[5]">
-          <PDFViewer pdf_url={currentChat?.pdfUrl || ''} />
+          <PDFViewer pdf_url={stringWithPlus || ''} />
         </div>
         {/* chat component */}
         <div className="flex-[3] border-l-4 border-l-slate-200">

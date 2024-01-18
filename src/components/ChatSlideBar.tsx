@@ -5,7 +5,7 @@ import React from "react";
 import { Button } from "./ui/button";
 import { MessageCircle, PlusCircle, SubscriptIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import axios from "axios";
+import axios from "axios";    
 import SubscriptionButton from "./SubscriptionButton";
 
 type NewType = DrizzleChat;
@@ -52,7 +52,7 @@ const ChatSlideBar = ({ chats, chatId, isPro }: Props) => {
         </div>
       </div>
 
-     <SubscriptionButton isPro={isPro} /> 
+     {/* <SubscriptionButton isPro={isPro} />  */}
     </div>
   );
 };

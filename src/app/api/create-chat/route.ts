@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { getS3Url } from "@/lib/s3";  
 import { chats } from "@/lib/db/schema";
+
 export async function POST(req: Request, res: Response) {
   const { userId } = await auth();
   if (!userId) {
@@ -14,18 +15,19 @@ export async function POST(req: Request, res: Response) {
     const { file_key, file_name } = body;
     // console.log(file_key, file_name);
     console.log(file_name);
-
-    await loadS3IntoPinecone(file_name);
+    try {
+      await loadS3IntoPinecone(file_name);
+    } catch (error) {
+      throw new Error("PDF name should not consist of spaces");
+    }
+    
  
-    const chat_id = await db
-      .insert(chats)
-      .values({
+    const chat_id = await db.insert(chats).values({
         fileKey: file_key,
         pdfName: file_name,
         pdfUrl: getS3Url(file_key),
         userId,
-      })
-      .returning({
+      }).returning({
         insertedId: chats.id,
       });
 

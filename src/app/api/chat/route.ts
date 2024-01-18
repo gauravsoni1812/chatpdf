@@ -17,15 +17,21 @@ export async function POST(req: Request) {
   try {
     const { messages, chatId } = await req.json();
     const _chats = await db.select().from(chats).where(eq(chats.id, chatId));
-  
+
     if (_chats.length != 1) {
       return NextResponse.json({ error: "chat not found" }, { status: 404 });
     }
  
     const fileKey = _chats[0].fileKey;
+    let file_name = _chats[0].pdfName;
+    console.log(file_name)
+    file_name = file_name.replace(/ /g, '+');
+    console.log(file_name);
     const lastMessage = messages[messages.length - 1];
-    const context = await getContext(lastMessage.content, fileKey);
-   
+    
+
+    const context = await getContext(lastMessage.content, file_name);
+    
     const prompt = {
       role: "system",
       content: `AI assistant is a brand new, powerful, human-like artificial intelligence.
@@ -73,6 +79,7 @@ export async function POST(req: Request) {
     return new StreamingTextResponse(stream);
   } catch (error) {
     console.log(error , "error in calling apis")
+    throw error ;
   }
 }
  

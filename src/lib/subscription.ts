@@ -10,10 +10,8 @@ export const checkSubscription = async () => {
     return false;
   }
 
-  const _userSubscriptions = await db
-    .select()
-    .from(userSubscriptions)
-    .where(eq(userSubscriptions.userId, userId));
+  const _userSubscriptions = await db.select().from(userSubscriptions).where(eq(userSubscriptions.userId, userId));
+  // console.log(_userSubscriptions);
 
   if (!_userSubscriptions[0]) {
     return false;
